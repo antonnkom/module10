@@ -36,30 +36,8 @@ const display = () => {
   for (let i = 0; i < fruits.length; i++) {
     // TODO: формируем новый элемент <li> при помощи document.createElement,
     // и добавляем в конец списка fruitsList при помощи document.appendChild
-    let classColor;
-    let newElementList = document.createElement('li');
-
-    switch (fruits[i].color) {
-      case 'фиолетовый':
-        classColor = 'fruit_violet';
-        break;
-
-      case 'зеленый':
-        classColor = 'fruit_green';
-        break;
-
-      case 'розово-красный':
-        classColor = 'fruit_carmazin';
-        break;
-
-      case 'желтый':
-        classColor = 'fruit_yellow';
-        break;
-
-      case 'светло-коричневый':
-        classColor = 'fruit_lightbrown';
-        break;
-    }
+    const newElementList = document.createElement('li');
+    const classColor = getClassColor(fruits[i].color);
 
     newElementList.className = `fruit__item ${classColor}`;
     newElementList.innerHTML = `<div class="fruit__info">
@@ -70,6 +48,26 @@ const display = () => {
       </div>`;
 
     fruitsList.appendChild(newElementList);
+  }
+};
+
+// получение стиля для цвета
+const getClassColor = (color) => {
+  switch (color) {
+    case 'фиолетовый':
+      return 'fruit_violet';
+
+    case 'зеленый':
+      return 'fruit_green';
+
+    case 'розово-красный':
+      return 'fruit_carmazin';
+
+    case 'желтый':
+      return 'fruit_yellow';
+
+    case 'светло-коричневый':
+      return 'fruit_lightbrown';
   }
 };
 
@@ -153,12 +151,25 @@ let sortKind = 'bubbleSort'; // инициализация состояния в
 let sortTime = '-'; // инициализация состояния времени сортировки
 
 const comparationColor = (a, b) => {
-  return a > b ? a : b;
+  return parseInt(a, 16) > parseInt(b, 16);
 };
 
 const sortAPI = {
   bubbleSort(arr, comparation) {
     // TODO: допишите функцию сортировки пузырьком
+    const n = arr.length;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n - 1 - i; j++) {
+        const color1 = getColorHex(rgb(arr[j].color));
+        const color2 = getColorHex(rgb(arr[j + 1].color));
+
+        if (comparation(color1, color2)) {
+          let temp = arr[j + 1];
+          arr[j + 1] = arr[j];
+          arr[j] = temp;
+        }
+      }
+    }
   },
 
   quickSort(arr, comparation) {
@@ -171,8 +182,26 @@ const sortAPI = {
     sort(arr, comparation);
     const end = new Date().getTime();
     sortTime = `${end - start} ms`;
+    sortTimeLabel.textContent = sortTime;
   },
 };
+
+// получаем цвет из CSS класса в формате rbg
+const rgb = (color) => {
+  const elem = document.querySelector(`.${getClassColor(color)}`);
+  return getComputedStyle(elem).getPropertyValue('background-color');
+};
+
+// преобразуем цвет из rgb в hex
+// и получаем число в 16-ричной системе исчисления
+const getColorHex = (rgb) => { 
+  rgb = rgb.match(/^rgb\((\d+), \s*(\d+), \s*(\d+)\)$/); 
+  
+  function hexCode(i) { 
+      return ('0' + parseInt(i).toString(16)).slice(-2); 
+  } 
+  return hexCode(rgb[1]) + hexCode(rgb[2]) + hexCode(rgb[3]); 
+}
 
 // инициализация полей
 sortKindLabel.textContent = sortKind;
