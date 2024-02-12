@@ -65,11 +65,12 @@ main {
 .panel__wrapper {
   flex-basis: 25%;
   max-height: inherit;
-  overflow: hidden;
+  overflow: auto;
   background: aliceblue;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 21rem;
 }
 
 .panel__devtools {
@@ -87,7 +88,7 @@ main {
   flex-basis: 75%;
   background: #fff;
   max-height: inherit;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .fruits__list {

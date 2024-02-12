@@ -29,10 +29,45 @@ let fruits = JSON.parse(fruitsJSON);
 const display = () => {
   // TODO: очищаем fruitsList от вложенных элементов,
   // чтобы заполнить актуальными данными из fruits
+  fruitsList = '';
 
   for (let i = 0; i < fruits.length; i++) {
     // TODO: формируем новый элемент <li> при помощи document.createElement,
     // и добавляем в конец списка fruitsList при помощи document.appendChild
+    let classColor;
+    let newElementList = document.createElement('li');
+
+    switch (fruits[i].color) {
+      case 'фиолетовый':
+        classColor = 'fruit_violet';
+        break;
+
+      case 'зеленый':
+        classColor = 'fruit_green';
+        break;
+
+      case 'розово-красный':
+        classColor = 'fruit_carmazin';
+        break;
+
+      case 'желтый':
+        classColor = 'fruit_yellow';
+        break;
+
+      case 'светло-коричневый':
+        classColor = 'fruit_lightbrown';
+        break;
+    }
+
+    newElementList.className = `fruit__item ${classColor}`;
+    newElementList.innerHTML = `<div class="fruit__info">
+        <div>index: ${i}</div>
+        <div>kind: ${fruits[i].kind}</div>
+        <div>color: ${fruits[i].color}</div>
+        <div>weight (кг): ${fruits[i].weight}</div>
+      </div>`;
+
+    fruitsList.appendChild(newElementList);
   }
 };
 
@@ -58,6 +93,7 @@ const shuffleFruits = () => {
     // вырезаем его из fruits и вставляем в result.
     // ex.: [1, 2, 3], [] => [1, 3], [2] => [3], [2, 1] => [], [2, 1, 3]
     // (массив fruits будет уменьшатся, а result заполняться)
+    
   }
 
   fruits = result;
