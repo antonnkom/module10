@@ -163,7 +163,7 @@ const sortAPI = {
         const color1 = getColorHex(rgb(arr[j].color));
         const color2 = getColorHex(rgb(arr[j + 1].color));
 
-        if (comparation(color1, color2)) {
+        if (comparationColor(color1, color2)) {
           let temp = arr[j + 1];
           arr[j + 1] = arr[j];
           arr[j] = temp;
@@ -174,6 +174,11 @@ const sortAPI = {
 
   quickSort(arr, comparation) {
     // TODO: допишите функцию быстрой сортировки
+    const n = arr.length;
+    let i;
+    if (n > 1) {
+      
+    }
   },
 
   // выполняет сортировку и производит замер времени
