@@ -154,6 +154,13 @@ const comparationColor = (a, b) => {
   return parseInt(a, 16) > parseInt(b, 16);
 };
 
+// функция перемещения элементов
+const swap = (arr, firstIndex, secondIndex) => {
+  const temp = arr[firstIndex];
+  arr[firstIndex] = arr[secondIndex];
+  arr[secondIndex] = temp;
+};
+
 const sortAPI = {
   bubbleSort(arr, comparation) {
     // TODO: допишите функцию сортировки пузырьком
@@ -164,9 +171,7 @@ const sortAPI = {
         const color2 = getColorHex(rgb(arr[j + 1].color));
 
         if (comparationColor(color1, color2)) {
-          let temp = arr[j + 1];
-          arr[j + 1] = arr[j];
-          arr[j] = temp;
+          swap(arr, j + 1, j);
         }
       }
     }
@@ -175,7 +180,7 @@ const sortAPI = {
   quickSort(arr, comparation) {
     // TODO: допишите функцию быстрой сортировки
     const n = arr.length;
-    let i;
+
     if (n > 1) {
       
     }
@@ -214,6 +219,7 @@ sortTimeLabel.textContent = sortTime;
 
 sortChangeButton.addEventListener('click', () => {
   // TODO: переключать значение sortKind между 'bubbleSort' / 'quickSort'
+
 });
 
 sortActionButton.addEventListener('click', () => {
