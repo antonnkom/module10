@@ -161,6 +161,55 @@ const swap = (arr, firstIndex, secondIndex) => {
   arr[secondIndex] = temp;
 };
 
+const partition = (arr, left, right, comparation) => {
+  let indexPivot = Math.floor((right + left) / 2);
+  let pivot = getColorHex(rgb(arr[indexPivot].color));
+  let i = left;
+  let j = right;
+
+  while (i <= j) {
+    let colorI = getColorHex(rgb(arr[i].color));
+    let colorJ = getColorHex(rgb(arr[j].color));
+
+    while (comparation(pivot, colorI)) {
+      i++;
+      colorI = getColorHex(rgb(arr[i].color));
+    }
+
+    while (comparation(colorJ, pivot)) {
+      j--;
+      colorJ = getColorHex(rgb(arr[j].color));
+    }
+
+    if (i <= j) {
+      swap(arr, i, j);
+      i++;
+      j--;
+    }
+  }
+
+  return i;
+}
+
+const quickSortFunc = (arr, comparation, left, right) => {
+  let index;
+
+  if (arr.length > 1) {
+    left = (typeof left !== 'number') ? 0 : left;
+    right = (typeof right !== 'number') ? arr.length - 1 : right;
+
+    index = partition(arr, left, right, comparation);
+
+    if (left < index - 1) {
+      quickSortFunc(arr, comparation, left, index - 1);
+    }
+
+    if (index < right) {
+      quickSortFunc(arr, comparation, index, right);
+    }
+  }
+}
+
 const sortAPI = {
   bubbleSort(arr, comparation) {
     // TODO: допишите функцию сортировки пузырьком
@@ -170,7 +219,7 @@ const sortAPI = {
         const color1 = getColorHex(rgb(arr[j].color));
         const color2 = getColorHex(rgb(arr[j + 1].color));
 
-        if (comparationColor(color1, color2)) {
+        if (comparation(color1, color2)) {
           swap(arr, j + 1, j);
         }
       }
@@ -179,11 +228,7 @@ const sortAPI = {
 
   quickSort(arr, comparation) {
     // TODO: допишите функцию быстрой сортировки
-    const n = arr.length;
-
-    if (n > 1) {
-      
-    }
+    quickSortFunc(arr, comparation);    
   },
 
   // выполняет сортировку и производит замер времени
@@ -207,11 +252,12 @@ const rgb = (color) => {
 const getColorHex = (rgb) => { 
   rgb = rgb.match(/^rgb\((\d+), \s*(\d+), \s*(\d+)\)$/); 
   
-  function hexCode(i) { 
+  function hexCode(i)
+  { 
       return ('0' + parseInt(i).toString(16)).slice(-2); 
   } 
   return hexCode(rgb[1]) + hexCode(rgb[2]) + hexCode(rgb[3]); 
-}
+};
 
 // инициализация полей
 sortKindLabel.textContent = sortKind;
@@ -219,7 +265,8 @@ sortTimeLabel.textContent = sortTime;
 
 sortChangeButton.addEventListener('click', () => {
   // TODO: переключать значение sortKind между 'bubbleSort' / 'quickSort'
-
+  sortKind = sortKind === 'bubbleSort' ? 'quickSort' : 'bubbleSort';
+  sortKindLabel.textContent = sortKind;
 });
 
 sortActionButton.addEventListener('click', () => {
