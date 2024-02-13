@@ -128,6 +128,27 @@ main {
   background: #cd853f;
 }
 
+.fruit_red {
+  background: #ff0000;
+}
+
+.fruit_blue {
+  background: #008cba;
+}
+
+.fruit_black {
+  background: #000000;
+}
+
+.fruit_white {
+  background: #ffffff;
+  border: 1px solid #000000;
+}
+
+.fruit_orange {
+  background: #ffa500;
+}
+
 .fruit__info {
   display: flex;
   justify-content: center;

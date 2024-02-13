@@ -58,16 +58,41 @@ const getClassColor = (color) => {
       return 'fruit_violet';
 
     case 'зеленый':
+    case 'зелёный':
       return 'fruit_green';
 
     case 'розово-красный':
+    case 'розовый':
       return 'fruit_carmazin';
 
     case 'желтый':
+    case 'жёлтый':
       return 'fruit_yellow';
 
     case 'светло-коричневый':
+    case 'коричневый':
       return 'fruit_lightbrown';
+
+    case 'красный':
+      return 'fruit_red';
+
+    case 'спиний':
+    case 'голубой':
+    case 'светло-синий':
+      return 'fruit_blue';
+
+    case 'черный':
+    case 'чёрный':
+      return 'fruit_black';
+
+    case 'белый':
+      return 'fruit_white';
+
+    case 'оранжевый':
+      return 'fruit_orange';
+
+    default:
+      return 'fruit_violet';
   }
 };
 
@@ -210,6 +235,24 @@ const quickSortFunc = (arr, comparation, left, right) => {
   }
 }
 
+// получаем цвет из CSS класса в формате rbg
+const rgb = (color) => {
+  const elem = document.querySelector(`.${getClassColor(color)}`);
+  return getComputedStyle(elem).getPropertyValue('background-color');
+};
+
+// преобразуем цвет из rgb в hex
+// и получаем число в 16-ричной системе исчисления
+const getColorHex = (rgb) => { 
+  rgb = rgb.match(/^rgb\((\d+), \s*(\d+), \s*(\d+)\)$/); 
+  
+  function hexCode(i)
+  { 
+      return ('0' + parseInt(i).toString(16)).slice(-2); 
+  } 
+  return hexCode(rgb[1]) + hexCode(rgb[2]) + hexCode(rgb[3]); 
+};
+
 const sortAPI = {
   bubbleSort(arr, comparation) {
     // TODO: допишите функцию сортировки пузырьком
@@ -241,24 +284,6 @@ const sortAPI = {
   },
 };
 
-// получаем цвет из CSS класса в формате rbg
-const rgb = (color) => {
-  const elem = document.querySelector(`.${getClassColor(color)}`);
-  return getComputedStyle(elem).getPropertyValue('background-color');
-};
-
-// преобразуем цвет из rgb в hex
-// и получаем число в 16-ричной системе исчисления
-const getColorHex = (rgb) => { 
-  rgb = rgb.match(/^rgb\((\d+), \s*(\d+), \s*(\d+)\)$/); 
-  
-  function hexCode(i)
-  { 
-      return ('0' + parseInt(i).toString(16)).slice(-2); 
-  } 
-  return hexCode(rgb[1]) + hexCode(rgb[2]) + hexCode(rgb[3]); 
-};
-
 // инициализация полей
 sortKindLabel.textContent = sortKind;
 sortTimeLabel.textContent = sortTime;
@@ -282,5 +307,21 @@ sortActionButton.addEventListener('click', () => {
 addActionButton.addEventListener('click', () => {
   // TODO: создание и добавление нового фрукта в массив fruits
   // необходимые значения берем из kindInput, colorInput, weightInput
-  display();
+  const kind = kindInput.value;
+  const color = colorInput.value;
+  const weight = weightInput.value;
+
+  if (kind !== '' && color !== '' && ! isNaN(weight)) {
+    let arr = {'kind': kind, 'color': color, 'weight': weight};
+    fruits.push(arr);
+    display();
+  } else {
+    if (kind === '') {
+      alert('Не заполнено поле kind (Название фрукта).');
+    } else if (color === '') {
+      alert('Не заполнено поле color (Цвет фрукта).');
+    } else if (isNaN(weight)) {
+      alert('Не заполнено, либо введено некорректное значение веса. Вес должен быть числом.');
+    }
+  }
 });
