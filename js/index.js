@@ -307,21 +307,26 @@ sortActionButton.addEventListener('click', () => {
 addActionButton.addEventListener('click', () => {
   // TODO: создание и добавление нового фрукта в массив fruits
   // необходимые значения берем из kindInput, colorInput, weightInput
-  const kind = kindInput.value;
-  const color = colorInput.value;
-  const weight = weightInput.value;
+  const inputKind = kindInput.value;
+  const inputColor = colorInput.value;
+  const inputWeight = weightInput.value;
 
-  if (kind !== '' && color !== '' && ! isNaN(weight)) {
-    let arr = {'kind': kind, 'color': color.toLowerCase(), 'weight': weight};
+  if (inputKind !== '' && inputColor !== '' && ! isNaN(inputWeight)) {
+    let arr = {'kind': inputKind, 'color': inputColor.toLowerCase(), 'weight': inputWeight};
     fruits.push(arr);
     display();
   } else {
-    if (kind === '') {
+    if (inputKind === '') {
       alert('Не заполнено поле kind (Название фрукта).');
-    } else if (color === '') {
+    } else if (inputColor === '') {
       alert('Не заполнено поле color (Цвет фрукта).');
-    } else if (isNaN(weight)) {
+    } else if (isNaN(inputWeight)) {
       alert('Не заполнено, либо введено некорректное значение веса. Вес должен быть числом.');
     }
   }
+
+  // очищаем поля ввода
+  kindInput.value = '';
+  colorInput.value = '';
+  weightInput.value = '';
 });
