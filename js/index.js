@@ -76,7 +76,7 @@ const getClassColor = (color) => {
     case 'красный':
       return 'fruit_red';
 
-    case 'спиний':
+    case 'синий':
     case 'голубой':
     case 'светло-синий':
       return 'fruit_blue';
