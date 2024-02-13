@@ -150,7 +150,7 @@ shuffleButton.addEventListener('click', () => {
 
 // фильтрация массива
 const filterFruits = () => {
-  const minWeight = parseFloat(minWeightInput.value);
+  const minWeight = minWeightInput.value !== '' ? parseFloat(minWeightInput.value) : 0;
   const maxWeight = parseFloat(maxWeightInput.value);
 
   if (minWeight > maxWeight || isNaN(minWeight) || isNaN(maxWeight)) {
@@ -312,7 +312,7 @@ addActionButton.addEventListener('click', () => {
   const weight = weightInput.value;
 
   if (kind !== '' && color !== '' && ! isNaN(weight)) {
-    let arr = {'kind': kind, 'color': color, 'weight': weight};
+    let arr = {'kind': kind, 'color': color.toLowerCase(), 'weight': weight};
     fruits.push(arr);
     display();
   } else {
